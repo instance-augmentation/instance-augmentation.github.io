@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Instance Augmentation method augment images by redrawing individual objects in the scene retaining their original shape. This allows training with the unchanged class label. The generations are highly diverse and match the scene composition">
+  <meta name="keywords" content="data augmentations, diffusion models, generative AI">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset Enhancement with Instance-Level Augmentations</title>
+
+  <meta property="og:image" content="resources/og_image" />
+  <meta property="og:title" content="Dataset Enhancement with Instance-Level Augmentations" />
+  <meta property="og:description"
+    content="Instance Augmentation method augment images by redrawing individual objects in the scene retaining their original shape. This allows training with the unchanged class label. The generations are highly diverse and match the scene composition" />
+  <!-- Twitter automatically scrapes this. Go to https://cards-dev.twitter.com/validator?
+      if you update and want to force Twitter to re-scrape. -->
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:title" content="Dataset Enhancement with Instance-Level Augmentations" />
+  <meta property="twitter:description"
+    content="Instance Augmentation method augment images by redrawing individual objects in the scene retaining their original shape. This allows training with the unchanged class label. The generations are highly diverse and match the scene composition" />
+  <meta property="twitter:image" content="resources/architecture" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFNFH9CKNX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-VFNFH9CKNX');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <!-- <script src="./static/js/index.js"></script> -->
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+
+        <br>
+
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-3 publication-title" style="font-size: 2.2rem;">Dataset Enhancement with Instance-Level Augmentations</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Yl1Lu2YAAAAJ">Orest Kupyn</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://chrirupp.github.io/">Christian Rupprecht</a>
+              </span>&nbsp;&nbsp&nbsp;&nbsp;
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Visual Geometry Group, University of Oxford</span>&nbsp;&nbsp
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">PiñataFarms AI</span>&nbsp;&nbsp
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">ECCV 2024</span>
+            </div>
+
+            <!-- PDF Link. -->
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2406.08249" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <!-- Code Link. -->
+            <span class="link-block">
+              <a href="https://github.com/KupynOrest/instance_augmentation"
+                class="external-link button is-normal is-rounded is-dark disabled">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <td style="vertical-align:middle">
+          <img src='resources/architecture.png'>
+        </td>
+        <br>
+        <h2 class="subtitle">
+          We present a method for expanding a dataset by incorporating knowledge from the wide distribution of pre-trained latent diffusion models.
+          Data augmentations typically incorporate inductive biases about the image formation process into the training (e.g. translation, scaling, colour changes, etc.).
+          Here, we go beyond simple pixel transformations and introduce the concept of instance-level data augmentation by repainting parts of the image at the level of object instances.
+          The method combines a conditional diffusion model with depth and edge maps control conditioning to seamlessly repaint individual objects inside the scene, being applicable to any segmentation or detection dataset.
+          Used as a data augmentation method, it improves the performance and generalization of the state-of-the-art salient object detection, semantic segmentation and object detection models.
+          By redrawing all privacy-sensitive instances (people, license plates, etc.), the method is also applicable for data anonymization.
+        </h2>
+      </div>
+
+      <br>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width has-text-centered">
+          <h2 class="title is-3">Visual Examples: Repainting Multiple Objects In A Scene</h2>
+
+          <div class="content has-text-justified">
+            <p>
+              We augment images by redrawing individual objects in the scene retaining their original shape.
+              This allows training with the unchanged class label (e.g. class, segmentation, detection, etc.).
+              The generations are highly diverse and match the scene composition. Guess the original in each row!
+            </p>
+          </div>
+
+            <div class="columns is-centered">
+                <div class="column is-full-width">
+                <div class="columns is-centered">
+                    <div class="column is-4">
+                    <div class="square-image">
+                        <img src="resources/main/mp.jpeg" alt="input">
+                    </div>
+                    </div>
+                    <div class="column is-4">
+                    <div class="square-image">
+                        <img src="resources/main/mp_2.png" alt="output">
+                    </div>
+                    </div>
+                  <div class="column is-4">
+                    <div class="square-image">
+                      <img src="resources/main/mp_4.png" alt="output2">
+                    </div>
+                  </div>
+                </div>
+                </div>
+          <br>
+
+        </div>
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <div class="columns is-centered">
+                <div class="column is-4">
+                  <div class="square-image">
+                    <img src="resources/main/main_1_0.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="square-image">
+                    <img src="resources/main/main_1_1.jpg" alt="output">
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="square-image">
+                    <img src="resources/main/main_1_2.jpg" alt="output2">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+          </div>
+      </div>
+
+    </div>
+    </div>
+  </section>
+
+
+  <section class="section" id="Applications">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Applications</h2>
+
+          <p>
+            The method can generate images for an arbitrary dataset labelled with bounding boxes or segmentation masks, making it applicable for a wide range of tasks,
+            including Object Detection, Semantic and Instance Segmentation, Panoptic Segmentation, etc.
+          </p>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h3 class="title is-4">Salient Object Detection</h3>
+          <div class="content has-text-justified">
+            <p>
+              We create an augmented version of DUTS - largest dataset for salient object detection.To construct the text prompt for the pipeline, we crop the image by the bounding rectangle of the binarized
+              saliency map and use the BLIP-VQA model to predict the object name in  an open vocabulary setting.
+              The dataset is of relatively low resolution, which we also improve with our method.
+              Since salient object segmentation highly depends on predicting accurate object boundaries,
+              we add an optional mask refinement stage to preserve the sharpness and high quality of the masks.
+              To this end, we crop every generated object from the images in the train set using its corresponding
+              bounding rectangle of the saliency map.
+              Below you can see an example of an original image and three augmented variants.
+            </p>
+          </div>
+          <br>
+
+            <div class="columns is-centered">
+                <div class="column is-full-width">
+                <div class="columns is-centered">
+                    <div class="column is-3">
+                    <div class="square-image">
+                        <img src="resources/duts/0_0.jpg" alt="input">
+                    </div>
+                    </div>
+                    <div class="column is-3">
+                    <div class="square-image">
+                        <img src="resources/duts/0_1.jpg" alt="input">
+                    </div>
+                    </div>
+                    <div class="column is-3">
+                    <div class="square-image">
+                        <img src="resources/duts/0_2.jpg" alt="input">
+                    </div>
+                    </div>
+                    <div class="column is-3">
+                    <div class="square-image">
+                        <img src="resources/duts/0_3.jpg" alt="input">
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <div class="columns is-centered">
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/1_0.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/1_1.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/1_2.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/1_3.jpg" alt="input">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <div class="columns is-centered">
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/2_0.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/2_1.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/2_2.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-3">
+                  <div class="square-image">
+                    <img src="resources/duts/2_3.jpg" alt="input">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <br>
+
+          <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h3 class="title is-4">Visual Object Detection</h3>
+          <div class="content has-text-justified">
+            <p>
+              We evaluate the method on the COCO dataset, which is the largest dataset for object detection.
+              The dataset includes complex scenes, with multiple objects, occlusions and various backgrounds.
+              Still, the method generalize well to the complex scenes
+            </p>
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <div class="columns is-centered">
+                <div class="column is-6">
+                  <div class="square-image">
+                    <img src="resources/coco/0_0.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-6">
+                  <div class="square-image">
+                    <img src="resources/coco/0_1.jpg" alt="input">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <div class="columns is-centered">
+                <div class="column is-6">
+                  <div class="square-image">
+                    <img src="resources/coco/1_0.jpg" alt="input">
+                  </div>
+                </div>
+                <div class="column is-6">
+                  <div class="square-image">
+                    <img src="resources/coco/1_1.jpg" alt="input">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <br>
+        </div>
+      </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+              <h3 class="title is-4">Semantic Segmentation</h3>
+              <div class="content has-text-justified">
+                <p>
+                  The method can also be applied to the dataset that don't have the instance masks labels.
+                  In such case, the mask can be simply predicted by off-the-shelf model in open vocabulary setting.
+                  This allows to generate the augmentations for any object classes.
+                  To validate this, we regenerate Pascal VOC dataset for semantic segmentation without using the instance masks.
+                </p>
+              </div>
+                <div class="columns is-centered">
+                    <div class="column is-full-width">
+                    <div class="columns is-centered">
+                        <div class="column is-6">
+                        <div class="square-image">
+                            <img src="resources/voc/voc_or.jpg" alt="input">
+                        </div>
+                        </div>
+                        <div class="column is-6">
+                        <div class="square-image">
+                            <img src="resources/voc/voc.jpg" alt="input">
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+              <br>
+            </div>
+          </div>
+        </div>
+
+
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+              <h3 class="title is-4">Data Anononymization</h3>
+              <div class="content has-text-justified">
+                <p>
+                  We validate that fully replacing people in the training data with synthetic samples
+                  does not affect the final performance, which enables retrospectively improving privacy shortcomings of scraped internet datasets.
+                  For the COCO dataset, we generate two additional versions: anonymizing
+                  people and cars (for personal information such as license plates).
+                  The visual examples of repainting people and vehicles are shown below.
+                </p>
+              </div>
+              <div class="columns is-centered">
+                <div class="column is-full-width">
+                  <div class="columns is-centered">
+                    <div class="column is-6">
+                      <div class="square-image">
+                        <img src="resources/anon/real_car_zoomed.jpg" alt="input">
+                      </div>
+                    </div>
+                    <div class="column is-6">
+                      <div class="square-image">
+                        <img src="resources/anon/gen_car_zoomed.jpg" alt="input">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+              <div class="columns is-centered">
+                <div class="column is-full-width">
+                  <div class="columns is-centered">
+                    <div class="column is-6">
+                      <div class="square-image">
+                        <img src="resources/anon/real_people_zoomed.jpg" alt="input">
+                      </div>
+                    </div>
+                    <div class="column is-6">
+                      <div class="square-image">
+                        <img src="resources/anon/gen_people_zoomed.jpg" alt="input">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>
+  </section>
+
+
+  <section class="section" id="Package">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Python Package</h2>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <p>
+              The code is structured in a Python Package with a simple API that allow the augmentations to be applied ot any vision dataset online,
+              with just a few lines of code.
+            </p>
+          </div>
+          <pre><code>
+import os
+import cv2
+import glob
+from instance_augmentation.augment import Augmenter
+
+augmenter = Augmenter("path_to_save_results", p=1.0)
+for image_path in glob.glob("path_to_image_folder/*"):
+    image_name = os.path.split(image_path)[1]
+    original_image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
+    augmented_image = augmenter.augment_image(original_image, image_name)
+          </code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{kupyn2024dataset,
+    title = {Dataset Enhancement with Instance-Level Augmentations},
+    author = {Kupyn, Orest and Rupprecht, Christian},
+    journal = {arXiv preprint arXiv:2406.08249},
+    year = {2024}
+  }
+      </code></pre>
+    </div>
+  </section>
+
+
+  <section class="section" id="Acknowledgements">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Acknowledgements</h2>
+      <p>
+        We would like to thank ...
+      </p>
+    </div>
+  </section>
+
+  <!-- <section class="section" id="References">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Relevant Work</h2>
+      <a href="https://dove3d.github.io/">Dove: Learning Deformable 3D Objects by Watching Videos. <em>IJCV
+          2023</em>.</a><br />
+      <a href="https://3dmagicpony.github.io/">MagicPony: Learning Articulated 3D Animals in the Wild. <em>CVPR
+          2023</em>.</a><br />
+      <a href="https://farm3d.github.io/">Farm3D: Learning Articulated 3D Animals by Distilling 2D Diffusion. <em>3DV
+          2024</em>.</a><br />
+      <a href="https://keqiangsun.github.io/projects/ponymation/">Ponymation: Learning 3D Animal Motions from Unlabeled
+        Online Videos. <em>Arxiv 2023</em>.</a><br />
+      <a href="https://mehmetaygun.github.io/saor">SAOR: Single-View Articulated Object Reconstruction. <em>Arxiv
+          2023</em>.</a><br />
+      <a href="https://chhankyao.github.io/lassie/">LASSIE: Learning Articulated Shape from Sparse Image Ensemble via 3D
+        Part Discovery. <em>NeurIPS 2022</em>.</a><br />
+      <a href="https://chhankyao.github.io/hi-lassie/">Hi-LASSIE: High-Fidelity Articulated Shape and Skeleton Discovery
+        from Sparse Image Ensemble. <em>CVPR 2023</em>.</a><br />
+      <a href="https://chhankyao.github.io/artic3d/">ARTIC3D: Learning Robust Articulated 3D Shapes from Noisy Web Image
+        Collections. <em>NeurIPS 2023</em>.</a><br />
+      <a href="https://banmo-www.github.io/index.html">BANMo: Building Animatable 3D Neural Models from Many Casual
+        Videos. <em>CVPR 2022</em>.</a><br />
+      <a href="https://gengshan-y.github.io/rac-www/">RAC: Reconstructing Animatable Categories from Videos. <em>CVPR
+          2023</em>.</a><br />
+    </div>
+  </section> -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This webpage template is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
+              <a href="https://3dmagicpony.github.io/">MagicPony</a>,
+              <a href="https://cs.stanford.edu/~yzzhang/projects/rose/">Rose</a>, and
+              <a href="https://kyleleey.github.io/3DFauna/">3D-Fauna</a>, under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    initComparisons();
+    window.addEventListener('resize', resetComparisons);
+    linkVideos(0);
+    linkVideos(1);
+  </script>
+  <script type="text/javascript" src="./static/js/slick.min.js"></script>
+  <script src="./static/js/main.js"></script>
+
+</body>
+
+</html>
