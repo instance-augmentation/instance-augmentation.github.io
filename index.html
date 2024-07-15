@@ -122,12 +122,16 @@
           <img src='resources/architecture.png'>
         </td>
         <br>
-        <h2 class="subtitle">
-          Given an image and ground truth (or predicted) segmentation mask, we estimate depth and edge maps at the image level.
-          The annotation is decomposed into the per-object binary masks and class, which together form the conditioning of the inpaining model.
-          We redraw every instance and recombine them into a final image using alpha-blending sorted by depth. Used as a data augmentation method, it improves the performance and generalization of the state-of-the-art salient object detection, semantic segmentation and object detection models.
-          By redrawing all privacy-sensitive instances (people, license plates, etc.), the method is also applicable for data anonymization.
-        </h2>
+        <div class="content has-text-justified" style="font-size: 1.2em;">
+
+            <p>
+                We propose a novel method for dataset enhancement with instance-level augmentations.
+                Given an image and ground truth (or predicted) segmentation mask, we estimate depth and edge maps at the image level.
+                The annotation is decomposed into the per-object binary masks and class, which together form the conditioning of the inpainting model.
+                We redraw every instance and recombine them into a final image using alpha-blending sorted by depth. Used as a data augmentation method, it improves the performance and generalization of the state-of-the-art salient object detection, semantic segmentation and object detection models.
+                By redrawing all privacy-sensitive instances (people, license plates, etc.), the method is also applicable for data anonymization.
+            </p>
+        </div>
       </div>
 
       <br>
