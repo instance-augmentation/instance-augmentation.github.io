@@ -123,11 +123,9 @@
         </td>
         <br>
         <h2 class="subtitle">
-          We present a method for expanding a dataset by incorporating knowledge from the wide distribution of pre-trained latent diffusion models.
-          Data augmentations typically incorporate inductive biases about the image formation process into the training (e.g. translation, scaling, colour changes, etc.).
-          Here, we go beyond simple pixel transformations and introduce the concept of instance-level data augmentation by repainting parts of the image at the level of object instances.
-          The method combines a conditional diffusion model with depth and edge maps control conditioning to seamlessly repaint individual objects inside the scene, being applicable to any segmentation or detection dataset.
-          Used as a data augmentation method, it improves the performance and generalization of the state-of-the-art salient object detection, semantic segmentation and object detection models.
+          Given an image and ground truth (or predicted) segmentation mask, we estimate depth and edge maps at the image level.
+          The annotation is decomposed into the per-object binary masks and class, which together form the conditioning of the inpaining model.
+          We redraw every instance and recombine them into a final image using alpha-blending sorted by depth. Used as a data augmentation method, it improves the performance and generalization of the state-of-the-art salient object detection, semantic segmentation and object detection models.
           By redrawing all privacy-sensitive instances (people, license plates, etc.), the method is also applicable for data anonymization.
         </h2>
       </div>
@@ -221,7 +219,7 @@
           <h3 class="title is-4">Salient Object Detection</h3>
           <div class="content has-text-justified">
             <p>
-              We create an augmented version of DUTS - largest dataset for salient object detection.To construct the text prompt for the pipeline, we crop the image by the bounding rectangle of the binarized
+              We create an augmented version of DUTS - largest dataset for salient object detection. To construct the text prompt for the pipeline, we crop the image by the bounding rectangle of the binarized
               saliency map and use the BLIP-VQA model to predict the object name in  an open vocabulary setting.
               The dataset is of relatively low resolution, which we also improve with our method.
               Since salient object segmentation highly depends on predicting accurate object boundaries,
@@ -363,7 +361,7 @@
       </div>
           <div class="columns is-centered has-text-centered">
             <div class="column is-full-width">
-              <h3 class="title is-4">Semantic Segmentation</h3>
+              <h3 class="title is-4">Generalization To Other Datasets</h3>
               <div class="content has-text-justified">
                 <p>
                   The method can also be applied to the dataset that don't have the instance masks labels.
@@ -395,7 +393,7 @@
 
           <div class="columns is-centered has-text-centered">
             <div class="column is-full-width">
-              <h3 class="title is-4">Data Anononymization</h3>
+              <h3 class="title is-4">Data Anonymization</h3>
               <div class="content has-text-justified">
                 <p>
                   We validate that fully replacing people in the training data with synthetic samples
@@ -494,7 +492,7 @@ for image_path in glob.glob("path_to_image_folder/*"):
     <div class="container is-max-desktop content">
       <h2 class="title">Acknowledgements</h2>
       <p>
-        We would like to thank ...
+        We would like to thank <a href="https://scholar.google.com/citations?user=Ur0vgfMAAAAJ">Tetiana Martyniuk</a></span> for paper proofreading and valuable feedback.
       </p>
     </div>
   </section>
